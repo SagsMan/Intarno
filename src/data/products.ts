@@ -119,7 +119,7 @@ export const products: Product[] = [
       'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80',
     ],
     colors: ['#c8b9a2', '#8b6914', '#2c3e50'],
-    description: 'Inspired by Norwegian fjords, this armchair's organic curves cradle you in exceptional comfort.',
+    description: 'Inspired by Norwegian fjords, this armchair’s organic curves cradle you in exceptional comfort.',
     isNew: true,
     isSale: false,
     materials: ['Velvet fabric', 'Walnut base'],
