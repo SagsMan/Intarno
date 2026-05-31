@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react'
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] overflow-hidden bg-intarno-charcoal">
+    <section className="relative min-h-screen overflow-hidden bg-intarno-charcoal -mt-16 md:-mt-[4.5rem]">
       {/* Background image */}
       <div className="absolute inset-0">
         <img
@@ -13,11 +13,11 @@ export default function HeroSection() {
           loading="eager"
           fetchPriority="high"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/25 to-transparent" />
       </div>
 
-      {/* Content */}
-      <div className="relative h-full min-h-[90vh] flex items-end pb-16 md:pb-20">
+      {/* Content — padded top to clear the header */}
+      <div className="relative h-full min-h-screen flex items-end pb-16 md:pb-24 pt-32 md:pt-36">
         <div className="max-w-screen-2xl mx-auto px-4 md:px-8 lg:px-12 w-full">
           <div className="max-w-xl animate-fade-up" style={{ animationDelay: '0.2s', opacity: 0 }}>
             <p className="eyebrow text-intarno-accent mb-4">New Collection 2026</p>
@@ -46,7 +46,7 @@ export default function HeroSection() {
             <div className="w-px h-12 bg-white/30 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full bg-white/60 animate-[scrollLine_2s_ease_infinite]" style={{ height: '40%' }} />
             </div>
-            <span className="text-[9px] tracking-[0.2em] uppercase rotate-0 writing-mode-vertical">Scroll</span>
+            <span className="text-[9px] tracking-[0.2em] uppercase">Scroll</span>
           </div>
         </div>
       </div>
