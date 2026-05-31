@@ -14,6 +14,7 @@ export const navItems: NavItem[] = [
     label: 'Furniture',
     href: '/shop',
     children: [
+      { label: 'New Arrivals', href: '/shop/new' },
       { label: 'Sofas', href: '/shop/sofas' },
       { label: 'Chairs', href: '/shop/chairs' },
       { label: 'Tables', href: '/shop/tables' },
@@ -47,6 +48,7 @@ export const navItems: NavItem[] = [
       { label: 'Armchair Collections', href: '/collections/armchairs' },
       { label: 'Bed Collections', href: '/collections/beds' },
       { label: 'Storage Collections', href: '/collections/storage' },
+      { label: 'Accessories Collections', href: '/collections/accessories' },
       { label: 'Fabric & Leather', href: '/collections/fabrics' },
       { label: 'Outlet', href: '/shop/outlet' },
     ],
@@ -82,6 +84,7 @@ export const navItems: NavItem[] = [
 
 export const footerLinks = {
   shop: [
+    { label: 'New Arrivals', href: '/shop/new' },
     { label: 'Sofas', href: '/shop/sofas' },
     { label: 'Chairs', href: '/shop/chairs' },
     { label: 'Tables', href: '/shop/tables' },
@@ -98,11 +101,14 @@ export const footerLinks = {
     { label: 'Sustainability', href: '/about#sustainability' },
     { label: 'Careers', href: '/about#careers' },
     { label: 'Press', href: '/about#press' },
+    { label: 'Become a Franchisee', href: '/about#franchise' },
   ],
   services: [
     { label: 'Interior Design Service', href: '/contact' },
     { label: 'Free Fabric Samples', href: '/contact#samples' },
     { label: 'Find a Store', href: '/contact#stores' },
+    { label: 'Make an Appointment', href: '/contact' },
+    { label: 'Trade Program', href: '/about#professionals' },
     { label: 'Delivery Information', href: '/contact#delivery' },
     { label: 'Product Care', href: '/contact#care' },
     { label: 'Warranty', href: '/contact#warranty' },
