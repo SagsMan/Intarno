@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Heart, Share2, ChevronDown, ArrowLeft, Ruler, Package } from 'lucide-react'
+import { Heart, Share2, ChevronDown, Ruler, Package } from 'lucide-react'
 import { products, formatPrice } from '../data/products'
 import ProductCard from '../components/ui/ProductCard'
 
