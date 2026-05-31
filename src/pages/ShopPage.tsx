@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { SlidersHorizontal, X, ChevronDown } from 'lucide-react'
-import { products, categories, formatPrice } from '../data/products'
+import { products, categories } from '../data/products'
 import ProductCard from '../components/ui/ProductCard'
 
 const sortOptions = [
