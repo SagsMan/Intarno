@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Instagram, Facebook, Youtube, Pinterest, ArrowRight } from 'lucide-react'
+import { Instagram, Facebook, Youtube, Linkedin, ArrowRight } from 'lucide-react'
 import { footerLinks } from '../../data/navigation'
 
 export default function Footer() {
@@ -45,7 +45,7 @@ export default function Footer() {
               {[
                 { Icon: Instagram, href: '#', label: 'Instagram' },
                 { Icon: Facebook, href: '#', label: 'Facebook' },
-                { Icon: Pinterest, href: '#', label: 'Pinterest' },
+                { Icon: Linkedin, href: '#', label: 'LinkedIn' },
                 { Icon: Youtube, href: '#', label: 'YouTube' },
               ].map(({ Icon, href, label }) => (
                 <a
