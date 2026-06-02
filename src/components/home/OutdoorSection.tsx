@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react'
 export default function OutdoorSection() {
   return (
     <section className="relative overflow-hidden">
-      <div className="grid lg:grid-cols-2 min-h-[520px]">
+      <div className="grid lg:grid-cols-2 min-h-[480px]">
         {/* Image side */}
         <div className="relative order-2 lg:order-1 aspect-[4/3] lg:aspect-auto">
           <img
@@ -18,9 +18,9 @@ export default function OutdoorSection() {
 
         {/* Content side */}
         <div className="order-1 lg:order-2 bg-intarno-charcoal text-intarno-white flex items-center">
-          <div className="px-8 md:px-12 lg:px-16 py-14 lg:py-20 max-w-xl">
+          <div className="px-6 sm:px-10 md:px-12 lg:px-16 py-12 lg:py-20 w-full max-w-xl">
             <p className="eyebrow text-intarno-accent mb-4">Outdoor Living</p>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-5xl font-light leading-tight mb-6">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">
               Dine outdoors with the<br />
               <span className="italic">Cancùn collection</span>
             </h2>

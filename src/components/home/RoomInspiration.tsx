@@ -56,8 +56,9 @@ export default function RoomInspiration() {
         </Link>
       </div>
 
-      {/* Grid layout: 2 large + 3 small */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      {/* Mobile: stacked, Tablet: 2-col, Desktop: 3-col */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {/* Two tall cards */}
         {rooms.slice(0, 2).map((room) => (
           <Link key={room.id} to={room.href} className="group relative overflow-hidden aspect-[3/4]">
             <img
@@ -73,10 +74,12 @@ export default function RoomInspiration() {
             </div>
           </Link>
         ))}
-        <div className="grid grid-rows-3 gap-4 md:col-span-1 col-span-2 md:grid-cols-1 grid-cols-3">
+
+        {/* Three smaller stacked cards */}
+        <div className="sm:col-span-2 md:col-span-1 flex flex-col gap-4">
           {rooms.slice(2).map((room) => (
             <Link key={room.id} to={room.href} className="group relative overflow-hidden">
-              <div className="aspect-video md:aspect-[4/3] overflow-hidden">
+              <div className="aspect-video md:aspect-[4/3] overflow-hidden relative">
                 <img
                   src={room.image}
                   alt={room.title}
@@ -86,12 +89,16 @@ export default function RoomInspiration() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-3 left-3 text-white">
                   <p className="text-[10px] tracking-widest uppercase font-medium text-white/70">{room.label}</p>
-                  <p className="font-display text-sm font-light hidden md:block">{room.title}</p>
+                  <p className="font-display text-sm font-light">{room.title}</p>
                 </div>
               </div>
             </Link>
           ))}
         </div>
+      </div>
+
+      <div className="mt-6 flex justify-center md:hidden">
+        <Link to="/rooms" className="btn-secondary">All rooms</Link>
       </div>
     </section>
   )

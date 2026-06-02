@@ -23,6 +23,8 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    max-width: 100%;
   }
 
   body {
@@ -30,6 +32,7 @@
     background-color: var(--color-white);
     color: var(--color-black);
     overflow-x: hidden;
+    max-width: 100%;
   }
 
   img {
@@ -52,7 +55,7 @@
   }
 
   .section-title {
-    @apply font-display text-4xl md:text-5xl lg:text-6xl font-light leading-tight;
+    @apply font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light leading-tight;
   }
 
   .section-subtitle {

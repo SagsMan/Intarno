@@ -41,6 +41,7 @@ export default {
         'slide-down': 'slideDown 0.4s ease forwards',
         'slide-up': 'slideUp 0.4s ease forwards',
         'marquee': 'marquee 30s linear infinite',
+        'marquee-slow': 'marquee 50s linear infinite',
       },
       keyframes: {
         fadeUp: {

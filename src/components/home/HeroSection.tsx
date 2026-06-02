@@ -21,11 +21,11 @@ export default function HeroSection() {
         <div className="max-w-screen-2xl mx-auto px-4 md:px-8 lg:px-12 w-full">
           <div className="max-w-xl animate-fade-up" style={{ animationDelay: '0.2s', opacity: 0 }}>
             <p className="eyebrow text-intarno-accent mb-4">New Collection 2026</p>
-            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-light text-white leading-[1.05] mb-6">
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white leading-[1.05] mb-6">
               Elegantly designed<br />
               <span className="italic">for comfort</span> and calm
             </h1>
-            <p className="text-white/70 font-light text-lg leading-relaxed mb-8 max-w-md">
+            <p className="text-white/70 font-light text-base sm:text-lg leading-relaxed mb-8 max-w-md">
               Discover our latest Nordic sofa collections — crafted for real life, designed to last generations.
             </p>
             <div className="flex flex-wrap gap-4">
@@ -41,8 +41,8 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Scroll indicator */}
-          <div className="absolute right-8 md:right-12 bottom-12 flex flex-col items-center gap-2 text-white/50 animate-fade-in" style={{ animationDelay: '1s', opacity: 0 }}>
+          {/* Scroll indicator — hidden on small screens to avoid overflow */}
+          <div className="hidden sm:flex absolute right-8 md:right-12 bottom-12 flex-col items-center gap-2 text-white/50 animate-fade-in" style={{ animationDelay: '1s', opacity: 0 }}>
             <div className="w-px h-12 bg-white/30 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full bg-white/60 animate-[scrollLine_2s_ease_infinite]" style={{ height: '40%' }} />
             </div>

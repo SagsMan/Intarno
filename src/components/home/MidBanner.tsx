@@ -2,24 +2,24 @@ import { Link } from 'react-router-dom'
 
 export default function MidBanner() {
   return (
-    <section className="py-16 md:py-0">
-      <div className="max-w-screen-2xl mx-auto md:px-0">
-        <div className="grid md:grid-cols-2 min-h-[500px] md:min-h-[600px]">
+    <section className="py-0">
+      <div className="max-w-screen-2xl mx-auto">
+        <div className="grid md:grid-cols-2 min-h-[480px] md:min-h-[600px]">
           {/* Image */}
           <div className="relative overflow-hidden order-2 md:order-1">
             <img
               src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1000&q=80"
               alt="Intarno armchair"
-              className="w-full h-full object-cover min-h-[360px] md:min-h-auto"
+              className="w-full h-full object-cover min-h-[320px]"
               loading="lazy"
             />
           </div>
 
           {/* Content */}
-          <div className="order-1 md:order-2 flex items-center bg-intarno-cream px-6 md:px-16 lg:px-24 py-12 md:py-16">
-            <div className="max-w-lg">
+          <div className="order-1 md:order-2 flex items-center bg-intarno-cream px-6 sm:px-10 md:px-12 lg:px-16 xl:px-24 py-12 md:py-16">
+            <div className="max-w-lg w-full">
               <p className="eyebrow text-intarno-mid mb-4">Beautifully crafted</p>
-              <h2 className="font-display text-4xl md:text-5xl font-light leading-tight mb-6">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">
                 Transform any space with a{' '}
                 <span className="italic">living chair</span>
               </h2>
