@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Suspense, lazy } from 'react'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
+import { Analytics } from '@vercel/analytics/react'
 
 // ─── Public layout & pages ──────────────────────────────────────────────────
 import Layout from './components/layout/Layout'
@@ -128,6 +129,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <AppRoutes />
+        <Analytics />
       </AuthProvider>
     </QueryClientProvider>
   )
