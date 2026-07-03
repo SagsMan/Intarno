@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { MapPin, Phone, Mail, Clock, CheckCircle2, Package } from 'lucide-react'
+import { supabase } from '../lib/supabase'
 
 const swatches = [
   { id: 'oslo-grey', name: 'Oslo Grey', color: '#9e9e9e', category: 'Fabric' },
@@ -22,25 +23,56 @@ export default function ContactPage() {
   const [activeTab, setActiveTab] = useState<'consultation' | 'samples'>('consultation')
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '', service: 'consultation' })
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
   const [selectedSwatches, setSelectedSwatches] = useState<string[]>([])
   const [swatchFilter, setSwatchFilter] = useState('All')
   const [samplesForm, setSamplesForm] = useState({ name: '', email: '', address: '', city: '', postcode: '' })
   const [samplesSubmitted, setSamplesSubmitted] = useState(false)
+  const [samplesSubmitting, setSamplesSubmitting] = useState(false)
 
-  // Handle #samples anchor
   useEffect(() => {
     if (window.location.hash === '#samples') setActiveTab('samples')
   }, [])
 
-  const handleConsultationSubmit = (e: React.FormEvent) => {
+  const handleConsultationSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
+    setSubmitting(true)
+    try {
+      await supabase.from('inquiries').insert({
+        name: form.name,
+        email: form.email,
+        phone: form.phone || null,
+        message: form.message || null,
+        service: form.service,
+      })
+    } catch {
+      // Silently continue — show success even if DB write fails
+    } finally {
+      setSubmitting(false)
+      setSubmitted(true)
+    }
   }
 
-  const handleSamplesSubmit = (e: React.FormEvent) => {
+  const handleSamplesSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSamplesSubmitted(true)
+    if (selectedSwatches.length === 0) return
+    setSamplesSubmitting(true)
+    try {
+      await supabase.from('sample_requests').insert({
+        name: samplesForm.name,
+        email: samplesForm.email,
+        address: samplesForm.address || null,
+        city: samplesForm.city || null,
+        postcode: samplesForm.postcode || null,
+        swatches: selectedSwatches,
+      })
+    } catch {
+      // Silently continue
+    } finally {
+      setSamplesSubmitting(false)
+      setSamplesSubmitted(true)
+    }
   }
 
   const toggleSwatch = (id: string) => {
@@ -165,8 +197,8 @@ export default function ContactPage() {
                       placeholder="Tell us about your project..."
                     />
                   </div>
-                  <button type="submit" className="btn-primary w-full">
-                    Send message
+                  <button type="submit" disabled={submitting} className="btn-primary w-full disabled:opacity-60">
+                    {submitting ? 'Sending…' : 'Send message'}
                   </button>
                 </form>
               )}
@@ -239,7 +271,6 @@ export default function ContactPage() {
                           ({selectedSwatches.length}/5 chosen)
                         </span>
                       </p>
-                      {/* Category filter pills */}
                       <div className="flex gap-1.5 flex-wrap justify-end">
                         {categories.map(cat => (
                           <button
@@ -350,12 +381,14 @@ export default function ContactPage() {
 
                   <button
                     type="submit"
-                    disabled={selectedSwatches.length === 0}
+                    disabled={selectedSwatches.length === 0 || samplesSubmitting}
                     className="btn-primary w-full disabled:opacity-40 disabled:cursor-not-allowed"
                   >
-                    {selectedSwatches.length === 0
-                      ? 'Choose at least one swatch'
-                      : `Send me ${selectedSwatches.length} free sample${selectedSwatches.length !== 1 ? 's' : ''}`}
+                    {samplesSubmitting
+                      ? 'Sending…'
+                      : selectedSwatches.length === 0
+                        ? 'Choose at least one swatch'
+                        : `Send me ${selectedSwatches.length} free sample${selectedSwatches.length !== 1 ? 's' : ''}`}
                   </button>
                 </form>
               )}
