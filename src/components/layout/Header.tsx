@@ -5,6 +5,7 @@ import { navItems } from '../../data/navigation'
 import MegaMenu from './MegaMenu'
 import MobileMenu from './MobileMenu'
 import SearchOverlay from '../ui/SearchOverlay'
+import { useCart } from '../../contexts/CartContext'
 import { useWishlist } from '../../contexts/WishlistContext'
 import { useTheme } from '../../contexts/ThemeContext'
 
@@ -17,6 +18,7 @@ export default function Header() {
   const location = useLocation()
   const isHome = location.pathname === '/'
   const { count: wishlistCount } = useWishlist()
+  const { count: cartCount } = useCart()
   const { isDark, toggleTheme } = useTheme()
 
   useEffect(() => {
@@ -183,9 +185,11 @@ export default function Header() {
                 className={`p-2 transition-colors relative ${isTransparent ? 'text-white hover:text-white/70' : 'hover:text-intarno-accent'}`}
               >
                 <ShoppingBag size={20} />
-                <span className={`absolute top-0.5 right-0.5 w-4 h-4 rounded-full text-[10px] flex items-center justify-center font-medium transition-colors ${
-                  isTransparent ? 'bg-white text-intarno-black' : 'bg-intarno-black text-intarno-white'
-                }`}>0</span>
+                {cartCount > 0 && (
+                  <span className={`absolute top-0.5 right-0.5 w-4 h-4 rounded-full text-[10px] flex items-center justify-center font-medium transition-colors ${
+                    isTransparent ? 'bg-white text-intarno-black' : 'bg-intarno-accent text-intarno-white'
+                  }`}>{cartCount > 9 ? '9+' : cartCount}</span>
+                )}
               </Link>
             </div>
           </div>
