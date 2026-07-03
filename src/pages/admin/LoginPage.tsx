@@ -78,13 +78,6 @@ export default function LoginPage() {
             {isLoading ? 'Signing In...' : 'Sign In'}
           </button>
         </form>
-
-        <div className="mt-8 text-center border-t border-white/10 pt-6">
-          <p className="text-xs text-intarno-mid mb-2">Hint credentials:</p>
-          <code className="text-xs text-intarno-light bg-black/50 px-2 py-1 rounded">
-            softwareclone100@gmail.com / 123456
-          </code>
-        </div>
       </div>
     </div>
   )
