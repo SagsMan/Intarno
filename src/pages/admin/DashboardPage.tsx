@@ -18,15 +18,16 @@ export default function DashboardPage() {
   useEffect(() => {
     async function load() {
       try {
-        const [inquiryCountRes, sampleCountRes, recentInquiriesRes, recentSamplesRes] = await Promise.all([
+        const [inquiryCountRes, productCountRes, sampleCountRes, recentInquiriesRes, recentSamplesRes] = await Promise.all([
           supabase.from('inquiries').select('*', { count: 'exact', head: true }),
+          supabase.from('products').select('*', { count: 'exact', head: true }),
           supabase.from('sample_requests').select('*', { count: 'exact', head: true }),
           supabase.from('inquiries').select('id, name, service, created_at').order('created_at', { ascending: false }).limit(5),
           supabase.from('sample_requests').select('id, name, city, created_at').order('created_at', { ascending: false }).limit(5),
         ])
 
         setStats({
-          totalProducts: 24,
+          totalProducts: productCountRes.count ?? 0,
           totalInquiries: inquiryCountRes.count ?? 0,
           totalSampleRequests: sampleCountRes.count ?? 0,
           recentInquiries: recentInquiriesRes.data ?? [],
