@@ -370,3 +370,54 @@
 .img-reveal {
   animation: imgReveal 0.8s ease forwards;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   ADMIN PANEL — Dark mode
+   Applied by adding class "admin-dark" to the admin layout root div.
+   Overrides Tailwind color tokens so all utility classes inside the admin
+   automatically pick up dark values without touching individual components.
+   ═══════════════════════════════════════════════════════════════════════════════ */
+.admin-dark {
+  /* Reassign brand tokens used in admin content area */
+  --color-intarno-cream:    #0f1117;   /* page background */
+  --color-intarno-black:    #e8e8f0;   /* primary text */
+  --color-intarno-mid:      #8888a8;   /* secondary text */
+  --color-intarno-light:    #2a2d3e;   /* borders */
+
+  color-scheme: dark;
+}
+
+/* Surfaces that use bg-white (cards, tables, header) */
+.admin-dark .admin-header       { background-color: #16192a; border-color: rgba(255,255,255,0.07); }
+.admin-dark .admin-main         { background-color: #0f1117; }
+.admin-dark .admin-content      { background-color: #0f1117; }
+.admin-dark .admin-title        { color: #e8e8f0; }
+.admin-dark .admin-toggle       { color: #8888a8; }
+.admin-dark .admin-toggle:hover { color: #e8e8f0; background-color: rgba(255,255,255,0.06); }
+.admin-dark .admin-text-secondary { color: #c0c0d8; }
+
+/* Any bg-white descendant inside admin-dark becomes a dark surface */
+.admin-dark .bg-white {
+  background-color: #16192a !important;
+}
+
+/* Inputs, selects, textareas */
+.admin-dark input:not([type="checkbox"]):not([type="radio"]),
+.admin-dark select,
+.admin-dark textarea {
+  background-color: #1c1f31 !important;
+  color: #e0e0f0 !important;
+  border-color: #2e3148 !important;
+}
+.admin-dark input::placeholder,
+.admin-dark textarea::placeholder {
+  color: #6060808 !important;
+}
+
+/* Table row hover in dark mode */
+.admin-dark tr:hover td { background-color: rgba(255,255,255,0.03) !important; }
+
+/* Scrollbar in admin dark */
+.admin-dark ::-webkit-scrollbar-track  { background: #12141e; }
+.admin-dark ::-webkit-scrollbar-thumb  { background: #2e3148; }
+.admin-dark ::-webkit-scrollbar-thumb:hover { background: #4a4d68; }
