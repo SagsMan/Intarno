@@ -7,8 +7,10 @@ interface Inquiry {
   name: string
   email: string
   phone?: string
+  subject?: string
   message?: string
-  service: string
+  type: string
+  status?: string
   created_at: string
 }
 
@@ -24,7 +26,7 @@ interface SampleRequest {
 }
 
 type Tab = 'inquiries' | 'samples'
-type SortField = 'name' | 'email' | 'service' | 'created_at'
+type SortField = 'name' | 'email' | 'type' | 'created_at'
 type SortDir = 'asc' | 'desc'
 
 function formatDate(iso: string) {
@@ -33,15 +35,15 @@ function formatDate(iso: string) {
   })
 }
 
-function ServiceBadge({ service }: { service: string }) {
+function TypeBadge({ type }: { type: string }) {
   const map: Record<string, string> = {
     consultation: 'bg-blue-50 text-blue-700 border-blue-200',
     interior_design: 'bg-purple-50 text-purple-700 border-purple-200',
     custom_furniture: 'bg-amber-50 text-amber-700 border-amber-200',
     project_management: 'bg-green-50 text-green-700 border-green-200',
   }
-  const label = service.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
-  const cls = map[service] || 'bg-gray-50 text-gray-600 border-gray-200'
+  const label = type.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+  const cls = map[type] || 'bg-gray-50 text-gray-600 border-gray-200'
   return (
     <span className={`inline-flex px-2 py-0.5 rounded-sm text-xs font-medium border ${cls}`}>
       {label}
@@ -49,23 +51,37 @@ function ServiceBadge({ service }: { service: string }) {
   )
 }
 
+function StatusBadge({ status }: { status?: string }) {
+  if (!status) return null
+  const map: Record<string, string> = {
+    new: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    read: 'bg-gray-50 text-gray-600 border-gray-200',
+    replied: 'bg-blue-50 text-blue-700 border-blue-200',
+  }
+  return (
+    <span className={`inline-flex px-2 py-0.5 rounded-sm text-xs font-medium border ${map[status] || 'bg-gray-50 text-gray-600 border-gray-200'}`}>
+      {status.charAt(0).toUpperCase() + status.slice(1)}
+    </span>
+  )
+}
+
 function Modal({ inquiry, onClose }: { inquiry: Inquiry; onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" onClick={onClose}>
-      <div
-        className="bg-white rounded-sm shadow-2xl w-full max-w-lg p-8 relative"
-        onClick={e => e.stopPropagation()}
-      >
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
-        >
+      <div className="bg-white rounded-sm shadow-2xl w-full max-w-lg p-8 relative" onClick={e => e.stopPropagation()}>
+        <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
           <X size={20} />
         </button>
         <h2 className="font-display text-2xl text-intarno-black mb-1">{inquiry.name}</h2>
-        <p className="text-sm text-intarno-mid mb-4">{formatDate(inquiry.created_at)}</p>
-        <ServiceBadge service={inquiry.service} />
-        <div className="mt-6 space-y-4">
+        <p className="text-sm text-intarno-mid mb-3">{formatDate(inquiry.created_at)}</p>
+        <div className="flex items-center gap-2 mb-4">
+          <TypeBadge type={inquiry.type} />
+          <StatusBadge status={inquiry.status} />
+        </div>
+        {inquiry.subject && (
+          <p className="text-sm font-medium text-intarno-charcoal mb-4 pb-4 border-b border-intarno-light/30">{inquiry.subject}</p>
+        )}
+        <div className="space-y-4">
           <div className="flex items-start gap-3">
             <Mail size={16} className="mt-0.5 text-intarno-accent shrink-0" />
             <div>
@@ -92,10 +108,10 @@ function Modal({ inquiry, onClose }: { inquiry: Inquiry; onClose: () => void }) 
             </div>
           )}
         </div>
-        <div className="mt-8 flex gap-3">
+        <div className="mt-8">
           <a
-            href={`mailto:${inquiry.email}?subject=Re: Your Intarno Inquiry`}
-            className="flex-1 text-center py-2.5 bg-intarno-charcoal text-white text-sm tracking-wider hover:bg-intarno-accent transition-colors rounded-sm"
+            href={`mailto:${inquiry.email}?subject=Re: ${inquiry.subject || 'Your Intarno Inquiry'}`}
+            className="w-full block text-center py-2.5 bg-intarno-charcoal text-white text-sm tracking-wider hover:bg-intarno-accent transition-colors rounded-sm"
           >
             Reply via Email
           </a>
@@ -181,7 +197,7 @@ export default function InquiriesPage() {
       setSamples(samRes.data ?? [])
     } catch (err) {
       console.error('[Inquiries] load error:', err)
-      setError(err instanceof Error ? err.message : 'Failed to load inquiries. Check your Supabase configuration.')
+      setError(err instanceof Error ? err.message : 'Failed to load inquiries.')
     } finally {
       setLoading(false)
     }
@@ -201,18 +217,19 @@ export default function InquiriesPage() {
 
   const deleteInquiry = async (id: number) => {
     if (!confirm('Delete this inquiry?')) return
-    await supabase.from('inquiries').delete().eq('id', id)
-    setInquiries(prev => prev.filter(i => i.id !== id))
+    const { error } = await supabase.from('inquiries').delete().eq('id', id)
+    if (!error) setInquiries(prev => prev.filter(i => i.id !== id))
   }
 
   const deleteSample = async (id: number) => {
     if (!confirm('Delete this sample request?')) return
-    await supabase.from('sample_requests').delete().eq('id', id)
-    setSamples(prev => prev.filter(s => s.id !== id))
+    const { error } = await supabase.from('sample_requests').delete().eq('id', id)
+    if (!error) setSamples(prev => prev.filter(s => s.id !== id))
   }
 
+  const q = search.toLowerCase()
   const filteredInquiries = inquiries
-    .filter(i => !search || i.name.toLowerCase().includes(search.toLowerCase()) || i.email.toLowerCase().includes(search.toLowerCase()) || i.service.toLowerCase().includes(search.toLowerCase()))
+    .filter(i => !q || i.name.toLowerCase().includes(q) || i.email.toLowerCase().includes(q) || i.type.toLowerCase().includes(q) || (i.subject || '').toLowerCase().includes(q))
     .sort((a, b) => {
       const va = a[sortField as keyof Inquiry] ?? ''
       const vb = b[sortField as keyof Inquiry] ?? ''
@@ -220,16 +237,16 @@ export default function InquiriesPage() {
     })
 
   const filteredSamples = samples
-    .filter(s => !search || s.name.toLowerCase().includes(search.toLowerCase()) || s.email.toLowerCase().includes(search.toLowerCase()))
+    .filter(s => !q || s.name.toLowerCase().includes(q) || s.email.toLowerCase().includes(q))
     .sort((a, b) => {
-      const va = a[sortField === 'service' ? 'name' : sortField as keyof SampleRequest] ?? ''
-      const vb = b[sortField === 'service' ? 'name' : sortField as keyof SampleRequest] ?? ''
+      const field = sortField === 'type' ? 'name' : sortField
+      const va = a[field as keyof SampleRequest] ?? ''
+      const vb = b[field as keyof SampleRequest] ?? ''
       return sortDir === 'asc' ? String(va).localeCompare(String(vb)) : String(vb).localeCompare(String(va))
     })
 
   return (
     <div className="max-w-7xl">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
         <div>
           <h1 className="font-display text-3xl text-intarno-black">Inquiries</h1>
@@ -255,7 +272,6 @@ export default function InquiriesPage() {
         </div>
       )}
 
-      {/* Stats */}
       <div className="grid grid-cols-2 gap-4 mb-8">
         <div className="bg-white border border-intarno-light/40 rounded-sm p-5">
           <p className="text-xs uppercase tracking-widest text-intarno-mid">Total Inquiries</p>
@@ -267,7 +283,6 @@ export default function InquiriesPage() {
         </div>
       </div>
 
-      {/* Tabs + Search */}
       <div className="bg-white border border-intarno-light/40 rounded-sm overflow-hidden">
         <div className="flex items-center justify-between px-6 pt-5 pb-0 border-b border-intarno-light/40 gap-4">
           <div className="flex gap-0">
@@ -286,10 +301,10 @@ export default function InquiriesPage() {
             <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-intarno-mid" />
             <input
               type="text"
-              placeholder="Search by name, email…"
+              placeholder="Search…"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="pl-8 pr-4 py-2 text-sm border border-intarno-light rounded-sm bg-intarno-cream/50 focus:outline-none focus:border-intarno-accent w-56"
+              className="pl-8 pr-4 py-2 text-sm border border-intarno-light rounded-sm bg-intarno-cream/50 focus:outline-none focus:border-intarno-accent w-52"
             />
           </div>
         </div>
@@ -299,24 +314,23 @@ export default function InquiriesPage() {
             <div className="w-7 h-7 border-2 border-intarno-accent border-t-transparent rounded-full animate-spin" />
           </div>
         ) : error ? (
-          <div className="text-center py-16 text-intarno-mid text-sm">
-            Unable to load data. Please check your connection and try again.
-          </div>
+          <div className="text-center py-16 text-intarno-mid text-sm">Unable to load data. Please try again.</div>
         ) : tab === 'inquiries' ? (
           filteredInquiries.length === 0 ? (
             <div className="text-center py-16 text-intarno-mid text-sm">
-              {search ? 'No inquiries match your search.' : 'No inquiries yet. They will appear here once customers submit the contact form.'}
+              {search ? 'No inquiries match your search.' : 'No inquiries yet.'}
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-intarno-light/40 bg-intarno-cream/30">
-                    {([['name','Name'],['email','Email'],['service','Service'],['created_at','Date']] as [SortField,string][]).map(([f,l]) => (
+                    {([['name','Name'],['email','Email'],['type','Type'],['created_at','Date']] as [SortField,string][]).map(([f,l]) => (
                       <th key={f} onClick={() => handleSort(f)} className="px-5 py-3 text-left text-xs uppercase tracking-widest text-intarno-mid font-medium cursor-pointer hover:text-intarno-charcoal select-none">
                         <span className="flex items-center gap-1">{l} <SortIcon field={f} /></span>
                       </th>
                     ))}
+                    <th className="px-5 py-3 text-left text-xs uppercase tracking-widest text-intarno-mid font-medium">Status</th>
                     <th className="px-5 py-3 text-right text-xs uppercase tracking-widest text-intarno-mid font-medium">Actions</th>
                   </tr>
                 </thead>
@@ -327,8 +341,9 @@ export default function InquiriesPage() {
                       <td className="px-5 py-4 text-intarno-mid">
                         <a href={`mailto:${inq.email}`} className="hover:text-intarno-accent hover:underline">{inq.email}</a>
                       </td>
-                      <td className="px-5 py-4"><ServiceBadge service={inq.service} /></td>
+                      <td className="px-5 py-4"><TypeBadge type={inq.type} /></td>
                       <td className="px-5 py-4 text-intarno-mid whitespace-nowrap">{formatDate(inq.created_at)}</td>
+                      <td className="px-5 py-4"><StatusBadge status={inq.status} /></td>
                       <td className="px-5 py-4">
                         <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                           <button onClick={() => setSelectedInquiry(inq)} className="p-1.5 text-intarno-mid hover:text-intarno-accent hover:bg-intarno-cream rounded-sm" title="View">
@@ -371,8 +386,8 @@ export default function InquiriesPage() {
                         <a href={`mailto:${s.email}`} className="hover:text-intarno-accent hover:underline">{s.email}</a>
                       </td>
                       <td className="px-5 py-4 text-intarno-mid">{s.city || '—'}</td>
-                      <td className="px-5 py-4">
-                        <span className="text-intarno-mid">{s.swatches?.length ? `${s.swatches.length} swatch${s.swatches.length !== 1 ? 'es' : ''}` : '—'}</span>
+                      <td className="px-5 py-4 text-intarno-mid">
+                        {s.swatches?.length ? `${s.swatches.length} swatch${s.swatches.length !== 1 ? 'es' : ''}` : '—'}
                       </td>
                       <td className="px-5 py-4 text-intarno-mid whitespace-nowrap">{formatDate(s.created_at)}</td>
                       <td className="px-5 py-4">

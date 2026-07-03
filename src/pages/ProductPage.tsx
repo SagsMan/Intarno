@@ -28,7 +28,7 @@ export default function ProductPage() {
   const [quoteSending, setQuoteSending] = useState(false)
   const [quoteError, setQuoteError] = useState<string | null>(null)
   const [quoteForm, setQuoteForm] = useState({
-    name: '', email: '', phone: '', message: '', service: 'consultation'
+    name: '', email: '', phone: '', message: '', type: 'consultation'
   })
 
   // Wishlist
@@ -81,8 +81,10 @@ export default function ProductPage() {
         name: quoteForm.name.trim(),
         email: quoteForm.email.trim(),
         phone: quoteForm.phone.trim() || null,
-        service: quoteForm.service,
-        message: `Quote request for: ${product.name}\n\n${quoteForm.message.trim()}`,
+        type: quoteForm.type,
+        subject: `Quote Request — ${product.name}`,
+        message: quoteForm.message.trim() || `Quote requested for: ${product.name}`,
+        status: 'new',
       })
       if (error) throw error
       setQuoteSent(true)
@@ -99,7 +101,7 @@ export default function ProductPage() {
     setTimeout(() => {
       setQuoteSent(false)
       setQuoteError(null)
-      setQuoteForm({ name: '', email: '', phone: '', message: '', service: 'consultation' })
+      setQuoteForm({ name: '', email: '', phone: '', message: '', type: 'consultation' })
     }, 300)
   }
 
@@ -132,7 +134,6 @@ export default function ProductPage() {
       <div className="grid lg:grid-cols-2 gap-8 md:gap-12 py-4 md:py-8">
         {/* Images */}
         <div>
-          {/* Main image */}
           <div className="aspect-[4/5] overflow-hidden bg-intarno-cream mb-3">
             <img
               src={product.images[activeImage]}
@@ -140,7 +141,6 @@ export default function ProductPage() {
               className="w-full h-full object-cover"
             />
           </div>
-          {/* Thumbnails */}
           {product.images.length > 1 && (
             <div className="flex gap-2">
               {product.images.map((img, i) => (
@@ -160,7 +160,6 @@ export default function ProductPage() {
 
         {/* Details */}
         <div className="lg:pt-4">
-          {/* Badges */}
           <div className="flex gap-2 mb-3">
             {product.isNew && (
               <span className="bg-intarno-black text-white text-[10px] font-medium tracking-widest uppercase px-2.5 py-1">New</span>
@@ -176,7 +175,6 @@ export default function ProductPage() {
 
           <h1 className="font-display text-4xl md:text-5xl font-light mb-4">{product.name}</h1>
 
-          {/* Price */}
           <div className="flex items-center gap-3 mb-6">
             {product.isSale && product.salePrice ? (
               <>
@@ -188,7 +186,6 @@ export default function ProductPage() {
             )}
           </div>
 
-          {/* Color selection */}
           {product.colors && product.colors.length > 0 && (
             <div className="mb-6">
               <p className="text-xs font-medium tracking-wide mb-3">
@@ -235,7 +232,6 @@ export default function ProductPage() {
             </button>
           </div>
 
-          {/* Service links */}
           <div className="grid grid-cols-2 gap-3 mb-8">
             <Link to="/contact#samples" className="flex items-center gap-2 text-xs font-medium text-intarno-mid hover:text-intarno-black transition-colors">
               <Package size={14} />
@@ -247,7 +243,6 @@ export default function ProductPage() {
             </Link>
           </div>
 
-          {/* Accordion */}
           <div className="border-t border-intarno-cream">
             {accordionSections.map(section => (
               <div key={section.id} className="border-b border-intarno-cream">
@@ -274,7 +269,6 @@ export default function ProductPage() {
         </div>
       </div>
 
-      {/* Related products */}
       {related.length > 0 && (
         <div className="py-16 border-t border-intarno-cream">
           <h2 className="font-display text-3xl font-light mb-8">You might also like</h2>
@@ -357,8 +351,8 @@ export default function ProductPage() {
                   <div className="col-span-2">
                     <label className="block text-xs uppercase tracking-widest text-intarno-mid mb-1.5">Service Type</label>
                     <select
-                      value={quoteForm.service}
-                      onChange={e => setQuoteForm(f => ({ ...f, service: e.target.value }))}
+                      value={quoteForm.type}
+                      onChange={e => setQuoteForm(f => ({ ...f, type: e.target.value }))}
                       className="w-full border border-intarno-light px-3 py-2 text-sm focus:outline-none focus:border-intarno-accent rounded-sm bg-white"
                     >
                       {SERVICES.map(s => (
@@ -367,7 +361,7 @@ export default function ProductPage() {
                     </select>
                   </div>
                   <div className="col-span-2">
-                    <label className="block text-xs uppercase tracking-widests text-intarno-mid mb-1.5">Additional Notes</label>
+                    <label className="block text-xs uppercase tracking-widest text-intarno-mid mb-1.5">Additional Notes</label>
                     <textarea
                       value={quoteForm.message}
                       onChange={e => setQuoteForm(f => ({ ...f, message: e.target.value }))}
