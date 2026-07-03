@@ -5,6 +5,7 @@ import { products } from '../data/products'
 import { formatPrice } from '../utils/format'
 import ProductCard from '../components/ui/ProductCard'
 import { useWishlist } from '../contexts/WishlistContext'
+import { useCart } from '../contexts/CartContext'
 import { supabase } from '../lib/supabase'
 
 const SERVICES = [
@@ -27,12 +28,14 @@ export default function ProductPage() {
   const [quoteSent, setQuoteSent] = useState(false)
   const [quoteSending, setQuoteSending] = useState(false)
   const [quoteError, setQuoteError] = useState<string | null>(null)
+  const [cartAdded, setCartAdded] = useState(false)
   const [quoteForm, setQuoteForm] = useState({
     name: '', email: '', phone: '', message: '', type: 'consultation'
   })
 
   // Wishlist
   const { toggle, isWishlisted } = useWishlist()
+  const { addItem, items } = useCart()
   const wishlisted = product ? isWishlisted(product.id) : false
 
   if (!product) {
@@ -70,6 +73,21 @@ export default function ProductPage() {
       content: 'Free delivery on orders over ₦500,000. White-glove delivery and professional assembly available. Typically 4–8 weeks for custom orders.',
     },
   ]
+
+  const handleAddToCart = () => {
+    if (!product) return
+    addItem({
+      id: product.id,
+      slug: product.slug,
+      name: product.name,
+      price: product.price,
+      currency: product.currency || '₦',
+      image: product.images?.[activeImage] || product.images?.[0] || '',
+      category: product.category,
+    })
+    setCartAdded(true)
+    setTimeout(() => setCartAdded(false), 2000)
+  }
 
   const handleQuoteSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -210,8 +228,18 @@ export default function ProductPage() {
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-3 mb-6">
             <button
+              onClick={handleAddToCart}
+              className={`flex-1 py-3.5 text-sm tracking-widest uppercase font-medium transition-all ${
+                cartAdded
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-intarno-black text-intarno-white hover:bg-intarno-accent'
+              }`}
+            >
+              {cartAdded ? 'Added to Cart ✓' : 'Add to Cart'}
+            </button>
+            <button
               onClick={() => setQuoteOpen(true)}
-              className="btn-primary flex-1"
+              className="btn-secondary flex-1"
             >
               Request a Quote
             </button>
