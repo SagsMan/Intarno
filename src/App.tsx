@@ -69,10 +69,15 @@ function PublicPageLoader() {
   )
 }
 
-function AppRoutes() {
+function PageViewTracker() {
   usePageView()
+  return null
+}
+
+function AppRoutes() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL?.replace(/\/$/, '') || ''}>
+      <PageViewTracker />
       <Routes>
         {/* ── Public site ── */}
         <Route path="/" element={<MainLayout />}>
