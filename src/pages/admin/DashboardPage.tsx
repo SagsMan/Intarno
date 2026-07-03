@@ -1,8 +1,33 @@
-import { useGetDashboardStats } from '@workspace/api-client-react'
+import { useState, useEffect } from 'react'
 import { Package, Users, ShoppingCart, MessageSquare, TrendingUp } from 'lucide-react'
 
+interface DashboardStats {
+  totalRevenue: number
+  totalOrders: number
+  totalProducts: number
+  totalCustomers: number
+  totalInquiries: number
+  recentOrders: Array<{ id: number; totalAmount: number; status: string }>
+  recentInquiries: Array<{ id: number; name: string; type: string; createdAt: string }>
+}
+
+const TOKEN_KEY = 'intarno_admin_token'
+
 export default function DashboardPage() {
-  const { data: stats, isLoading, error } = useGetDashboardStats()
+  const [stats, setStats] = useState<DashboardStats | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(false)
+
+  useEffect(() => {
+    const token = localStorage.getItem(TOKEN_KEY)
+    fetch('/api/dashboard/stats', {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(res => res.ok ? res.json() : Promise.reject(res))
+      .then(data => setStats(data))
+      .catch(() => setError(true))
+      .finally(() => setIsLoading(false))
+  }, [])
 
   if (isLoading) {
     return (
@@ -59,7 +84,6 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Recent Orders */}
         <div className="bg-white border border-intarno-light/20 rounded-sm shadow-sm flex flex-col">
           <div className="p-5 border-b border-intarno-light/20 flex justify-between items-center">
             <h3 className="font-display text-lg">Recent Orders</h3>
@@ -75,7 +99,7 @@ export default function DashboardPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-intarno-light/10">
-                  {stats.recentOrders.map((order: any) => (
+                  {stats.recentOrders.map((order) => (
                     <tr key={order.id} className="hover:bg-intarno-cream/50 transition-colors">
                       <td className="px-5 py-4 font-medium text-intarno-charcoal">#{order.id}</td>
                       <td className="px-5 py-4 text-intarno-mid">{formatCurrency(order.totalAmount)}</td>
@@ -94,7 +118,6 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Recent Inquiries */}
         <div className="bg-white border border-intarno-light/20 rounded-sm shadow-sm flex flex-col">
           <div className="p-5 border-b border-intarno-light/20 flex justify-between items-center">
             <h3 className="font-display text-lg">Recent Inquiries</h3>
@@ -110,7 +133,7 @@ export default function DashboardPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-intarno-light/10">
-                  {stats.recentInquiries.map((inq: any) => (
+                  {stats.recentInquiries.map((inq) => (
                     <tr key={inq.id} className="hover:bg-intarno-cream/50 transition-colors">
                       <td className="px-5 py-4 font-medium text-intarno-charcoal truncate max-w-[150px]">{inq.name}</td>
                       <td className="px-5 py-4">
