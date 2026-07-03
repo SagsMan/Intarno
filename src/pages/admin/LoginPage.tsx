@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { loginAdmin } from '../../services/authService'
+import { ArrowLeft } from 'lucide-react'
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -15,7 +16,6 @@ export default function LoginPage() {
     e.preventDefault()
     setError('')
     setIsLoading(true)
-
     try {
       const data = await loginAdmin(email, password)
       if (data) {
@@ -24,7 +24,7 @@ export default function LoginPage() {
       } else {
         setError('Invalid credentials')
       }
-    } catch (err) {
+    } catch {
       setError('An error occurred. Please try again.')
     } finally {
       setIsLoading(false)
@@ -32,7 +32,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-intarno-black text-intarno-white p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-intarno-black text-intarno-white p-4">
       <div className="w-full max-w-md bg-intarno-charcoal p-10 rounded-sm shadow-2xl border border-white/5">
         <div className="text-center mb-10">
           <h1 className="font-display text-4xl tracking-widest text-intarno-accent mb-2">INTARNO</h1>
@@ -41,23 +41,27 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-xs font-medium tracking-[0.2em] uppercase text-intarno-light mb-2">Email</label>
+            <label className="block text-xs font-medium tracking-[0.2em] uppercase text-intarno-light mb-2">
+              Email
+            </label>
             <input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               required
               className="w-full bg-intarno-black border border-white/10 px-4 py-3 text-sm focus:outline-none focus:border-intarno-accent transition-colors text-white"
               placeholder="admin@intarno.com"
             />
           </div>
-          
+
           <div>
-            <label className="block text-xs font-medium tracking-[0.2em] uppercase text-intarno-light mb-2">Password</label>
+            <label className="block text-xs font-medium tracking-[0.2em] uppercase text-intarno-light mb-2">
+              Password
+            </label>
             <input
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
               required
               className="w-full bg-intarno-black border border-white/10 px-4 py-3 text-sm focus:outline-none focus:border-intarno-accent transition-colors text-white"
               placeholder="••••••••"
@@ -75,10 +79,19 @@ export default function LoginPage() {
             disabled={isLoading}
             className="w-full bg-intarno-accent text-intarno-black font-medium text-sm tracking-widest uppercase py-3.5 hover:bg-white transition-colors disabled:opacity-50"
           >
-            {isLoading ? 'Signing In...' : 'Sign In'}
+            {isLoading ? 'Signing In…' : 'Sign In'}
           </button>
         </form>
       </div>
+
+      {/* Back to main site */}
+      <Link
+        to="/"
+        className="mt-6 flex items-center gap-2 text-sm text-intarno-mid hover:text-intarno-light transition-colors"
+      >
+        <ArrowLeft size={14} />
+        Back to main website
+      </Link>
     </div>
   )
 }

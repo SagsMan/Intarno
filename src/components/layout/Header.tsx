@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Search, Menu, X, ShoppingBag, Heart, MapPin, CalendarDays } from 'lucide-react'
+import { Search, Menu, X, ShoppingBag, Heart, MapPin, CalendarDays, Sun, Moon } from 'lucide-react'
 import { navItems } from '../../data/navigation'
 import MegaMenu from './MegaMenu'
 import MobileMenu from './MobileMenu'
 import SearchOverlay from '../ui/SearchOverlay'
 import { useWishlist } from '../../contexts/WishlistContext'
+import { useTheme } from '../../contexts/ThemeContext'
 
 export default function Header() {
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
@@ -16,6 +17,7 @@ export default function Header() {
   const location = useLocation()
   const isHome = location.pathname === '/'
   const { count: wishlistCount } = useWishlist()
+  const { isDark, toggleTheme } = useTheme()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60)
@@ -167,6 +169,15 @@ export default function Header() {
                   </span>
                 )}
               </button>
+              {/* Dark / light toggle */}
+              <button
+                onClick={toggleTheme}
+                className={`p-2 transition-colors hidden md:flex items-center justify-center ${isTransparent ? 'text-white hover:text-white/70' : 'text-intarno-mid hover:text-intarno-accent'}`}
+                aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+                {isDark ? <Sun size={19} /> : <Moon size={19} />}
+              </button>
+
               <Link
                 to="/cart"
                 className={`p-2 transition-colors relative ${isTransparent ? 'text-white hover:text-white/70' : 'hover:text-intarno-accent'}`}

@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Suspense, lazy } from 'react'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import { WishlistProvider } from './contexts/WishlistContext'
+import { ThemeProvider } from './contexts/ThemeContext'
 
 // ─── Public layout & pages (non-lazy for instant navigation) ────────────────
 import MainLayout from './layouts/MainLayout'
@@ -131,11 +132,13 @@ function AppRoutes() {
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <WishlistProvider>
-          <AppRoutes />
-        </WishlistProvider>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <WishlistProvider>
+            <AppRoutes />
+          </WishlistProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   )
 }

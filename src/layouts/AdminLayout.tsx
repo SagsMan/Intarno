@@ -4,7 +4,7 @@ import {
   ShoppingCart, Images, LogOut, Menu, X, Sun, Moon,
 } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
-import { ThemeProvider, useTheme } from '../contexts/ThemeContext'
+import { useTheme } from '../contexts/ThemeContext'
 import { useState, Suspense } from 'react'
 
 const NAV_ITEMS = [
@@ -25,20 +25,7 @@ function AdminPageSpinner() {
   )
 }
 
-// Logo that adapts to theme
-function AdminLogo({ isDark }: { isDark: boolean }) {
-  return (
-    <div className="flex items-center gap-2.5">
-      <svg viewBox="0 0 200 40" fill="none" className="h-7 w-auto" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="30" fontFamily="'Cormorant Garamond', Georgia, serif" fontWeight="600"
-          fontSize="28" letterSpacing="3" fill="#c8a96e">INTARNO</text>
-        <circle cx="193" cy="18" r="5" fill="none" stroke="#c8a96e" strokeWidth="2" />
-      </svg>
-    </div>
-  )
-}
-
-function AdminLayoutInner() {
+export default function AdminLayout() {
   const location  = useLocation()
   const navigate  = useNavigate()
   const { admin, logout } = useAuth()
@@ -57,18 +44,21 @@ function AdminLayoutInner() {
     <div className={`min-h-screen flex flex-col md:flex-row transition-colors duration-200 ${isDark ? 'admin-dark' : ''}`}>
 
       {/* ── Mobile top bar ─────────────────────────────────────── */}
-      <div className="md:hidden bg-[#1c1c1c] text-white px-4 py-3 flex items-center justify-between sticky top-0 z-50">
-        <AdminLogo isDark={isDark} />
+      <div className="md:hidden bg-[#1a1a1a] text-white px-4 py-3 flex items-center justify-between sticky top-0 z-50">
+        {/* Logo */}
         <div className="flex items-center gap-2">
+          <img src="/logo.svg" alt="Intarno" className="h-6 w-auto brightness-0 invert" />
+        </div>
+        <div className="flex items-center gap-1">
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-sm text-intarno-light hover:text-white transition-colors"
+            className="p-2 rounded-sm text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
             aria-label="Toggle theme"
           >
-            {isDark ? <Sun size={18} /> : <Moon size={18} />}
+            {isDark ? <Sun size={17} /> : <Moon size={17} />}
           </button>
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-1 text-intarno-light hover:text-white">
-            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-gray-400 hover:text-white">
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
@@ -81,8 +71,8 @@ function AdminLayoutInner() {
         ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
         {/* Brand */}
-        <div className="px-6 py-6 hidden md:flex items-center border-b border-white/5">
-          <AdminLogo isDark={isDark} />
+        <div className="px-6 py-5 hidden md:flex items-center border-b border-white/5">
+          <img src="/logo.svg" alt="Intarno" className="h-7 w-auto brightness-0 invert" style={{ filter: 'brightness(0) saturate(100%) invert(73%) sepia(43%) saturate(428%) hue-rotate(1deg) brightness(95%) contrast(89%)' }} />
         </div>
 
         {/* Nav */}
@@ -98,7 +88,7 @@ function AdminLayoutInner() {
                   flex items-center gap-3 px-4 py-2.5 text-sm rounded-sm transition-all duration-150
                   ${active
                     ? 'bg-intarno-accent/15 text-intarno-accent border border-intarno-accent/25'
-                    : 'text-intarno-light hover:bg-white/6 hover:text-white'}
+                    : 'text-gray-400 hover:bg-white/6 hover:text-white'}
                 `}
               >
                 <item.icon size={17} className={active ? 'text-intarno-accent' : 'opacity-60'} />
@@ -109,12 +99,12 @@ function AdminLayoutInner() {
         </nav>
 
         {/* User / logout */}
-        <div className="p-4 border-t border-white/5 space-y-2">
+        <div className="p-4 border-t border-white/5 space-y-1">
           <div className="px-4 py-2 flex items-center gap-3">
             <div className="w-7 h-7 rounded-full bg-intarno-accent/20 flex items-center justify-center text-intarno-accent text-xs font-bold shrink-0">
               {initials}
             </div>
-            <p className="text-xs text-intarno-mid truncate">{admin?.email}</p>
+            <p className="text-xs text-gray-500 truncate">{admin?.email}</p>
           </div>
           <button
             onClick={handleLogout}
@@ -140,16 +130,19 @@ function AdminLayoutInner() {
         {/* Desktop header */}
         <header className="admin-header hidden md:flex items-center justify-between px-8 py-4 border-b sticky top-0 z-20">
           <h1 className="font-display text-2xl admin-title">{pageTitle}</h1>
-          <div className="flex items-center gap-4">
-            {/* Theme toggle */}
+          <div className="flex items-center gap-3">
+            {/* Theme toggle — always visible with explicit colours */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-sm admin-toggle transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-sm border transition-colors
+                border-intarno-light/50 text-intarno-mid hover:text-intarno-charcoal hover:border-intarno-charcoal
+                dark:border-white/15 dark:text-gray-400 dark:hover:text-white dark:hover:border-white/40"
               aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-              title={isDark ? 'Light mode' : 'Dark mode'}
             >
-              {isDark ? <Sun size={17} /> : <Moon size={17} />}
+              {isDark ? <Sun size={14} /> : <Moon size={14} />}
+              <span>{isDark ? 'Light' : 'Dark'}</span>
             </button>
+
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-full bg-intarno-accent/20 flex items-center justify-center text-intarno-accent font-bold text-sm">
                 {initials}
@@ -159,7 +152,7 @@ function AdminLayoutInner() {
           </div>
         </header>
 
-        {/* Page content — Suspense scoped here so the sidebar never disappears */}
+        {/* Page content — Suspense scoped here so sidebar never disappears */}
         <div className="flex-1 p-4 md:p-8 overflow-y-auto admin-content">
           <Suspense fallback={<AdminPageSpinner />}>
             <Outlet />
@@ -167,14 +160,5 @@ function AdminLayoutInner() {
         </div>
       </main>
     </div>
-  )
-}
-
-// Wrap in ThemeProvider so toggle state lives inside the layout
-export default function AdminLayout() {
-  return (
-    <ThemeProvider>
-      <AdminLayoutInner />
-    </ThemeProvider>
   )
 }
