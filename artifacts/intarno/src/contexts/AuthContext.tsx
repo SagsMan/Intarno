@@ -1,10 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
-
-interface AdminUser {
-  id: number
-  email: string
-  name: string | null
-}
+import type { AdminUser } from '../types/admin'
+import { verifyAdminToken, logoutAdmin } from '../services/authService'
 
 interface AuthContextValue {
   isAuthenticated: boolean
@@ -32,13 +28,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return
     }
 
-    fetch('/api/auth/me', {
-      headers: { Authorization: `Bearer ${storedToken}` },
-    })
-      .then(async (res) => {
-        if (res.ok) {
-          const data = await res.json()
-          setAdmin(data)
+    verifyAdminToken(storedToken)
+      .then((adminUser) => {
+        if (adminUser) {
+          setAdmin(adminUser)
           setToken(storedToken)
         } else {
           localStorage.removeItem(TOKEN_KEY)
@@ -61,12 +54,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = useCallback(async () => {
     try {
       const storedToken = localStorage.getItem(TOKEN_KEY)
-      if (storedToken) {
-        await fetch('/api/auth/logout', {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${storedToken}` },
-        })
-      }
+      await logoutAdmin(storedToken)
     } finally {
       localStorage.removeItem(TOKEN_KEY)
       setToken(null)

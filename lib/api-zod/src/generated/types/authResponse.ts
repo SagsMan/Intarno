@@ -5,7 +5,9 @@
  * Intarno API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { AdminUser } from './adminUser';
 
-export interface HealthStatus {
-  status: string;
+export interface AuthResponse {
+  token: string;
+  admin: AdminUser;
 }

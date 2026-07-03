@@ -6,6 +6,9 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface HealthStatus {
-  status: string;
-}
+export type ListInquiriesParams = {
+type?: string;
+status?: string;
+limit?: number;
+offset?: number;
+};

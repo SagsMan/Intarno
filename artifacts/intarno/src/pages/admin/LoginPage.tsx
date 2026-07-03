@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
+import { loginAdmin } from '../../services/authService'
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -16,13 +17,8 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      })
-      if (response.ok) {
-        const data = await response.json()
+      const data = await loginAdmin(email, password)
+      if (data) {
         login(data.token, data.admin)
         navigate('/admin/dashboard')
       } else {

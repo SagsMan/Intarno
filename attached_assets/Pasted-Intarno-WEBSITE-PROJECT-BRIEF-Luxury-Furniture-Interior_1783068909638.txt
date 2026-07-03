@@ -1,0 +1,582 @@
+Intarno WEBSITE PROJECT BRIEF 
+Luxury Furniture, Interior Design & E-Commerce 
+Platform 
+PROJECT VISION 
+Intarno's website should function as more than an online store. 
+The platform should position Intarno as a premium furniture and interior design brand 
+capable of serving residential, commercial, and international clients through a seamless 
+digital experience. 
+The website should combine: 
+● Luxury Brand Positioning 
+● Interior Design Expertise 
+● Furniture Manufacturing Excellence 
+● E-Commerce Functionality 
+● Project Showcase 
+● Consultation & Lead Generation 
+The experience should feel like a premium architectural and interior design publication while 
+maintaining the functionality of a modern e-commerce platform. 
+DESIGN CONCEPT 
+The Curated Canvas 
+The website should feel like a luxury editorial magazine. 
+Design principles include: 
+● Large immersive photography 
+● Generous white space 
+● Elegant typography 
+● Minimalist layouts 
+● Smooth transitions 
+● Architectural precision 
+● Premium storytelling 
+The goal is to make visitors feel as though they are exploring a world-class furniture 
+showroom rather than browsing a conventional online store. 
+BRAND EXPERIENCE OBJECTIVES 
+The website must support three primary customer journeys: 
+Journey 1: Luxury Explorer 
+Home 
+→ Inspiration 
+→ Projects 
+→ Design Services 
+→ Consultation 
+Journey 2: Furniture Buyer 
+Home 
+→ Shop Furniture 
+→ Product Page 
+→ Cart 
+→ Checkout 
+Journey 3: Corporate Client 
+Home 
+→ Services 
+→ Factory & Craftsmanship 
+→ Projects 
+→ Consultation 
+→ Proposal 
+SITE ARCHITECTURE 
+Main Navigation 
+● Home 
+● Rooms & Inspiration 
+● Shop Furniture 
+● Design Services 
+● Custom Furniture 
+● Factory & Craftsmanship 
+● Projects 
+● Contact 
+PAGE STRUCTURE 
+Home Page 
+Purpose: 
+Introduce the brand and guide visitors into the experience. 
+Sections: 
+● Hero Video / Hero Image 
+● Brand Introduction 
+● Featured Collections 
+● Shop By Room 
+● Design Services Overview 
+● Factory Story 
+● Featured Projects 
+● Testimonials 
+● Consultation CTA 
+About Us & Team 
+Sections: 
+● Company Story 
+● Brand Philosophy 
+● Company Timeline 
+● Leadership Team 
+● Designers & Craftsmen 
+● Credentials & Achievements 
+Rooms & Inspiration 
+Sub-pages: 
+● Living Room 
+● Dining Room 
+● Bedroom 
+● Home Office 
+● Kitchen 
+● Outdoor Living 
+Features: 
+● Lifestyle Galleries 
+● Shop The Look 
+● Related Products 
+● Consultation CTA 
+Shop Furniture 
+Categories: 
+● Sofas 
+● Chairs 
+● Tables 
+● Beds 
+● Storage 
+● Kitchen Cabinets 
+● Doors 
+● Accessories 
+Features: 
+● Search 
+● Filtering 
+● Sorting 
+● Wishlist 
+● Related Products 
+● Recently Viewed Products 
+Product Detail Pages 
+Must include: 
+● Product Gallery 
+● Description 
+● Specifications 
+● Dimensions 
+● Material Information 
+● Delivery Information 
+● Related Products 
+● Add To Cart 
+● Request Quote 
+● Consultation CTA 
+Design Services 
+Service Categories: 
+Residential Interior Design 
+Commercial Interior Design 
+Hospitality Design 
+Space Planning 
+3D Visualization 
+Furniture Consultation 
+Custom Furniture 
+Features: 
+● Select Product Type 
+● Material Selection 
+● Color Selection 
+● Size Selection 
+● Finish Selection 
+● Upload Inspiration Image 
+● Request Quote 
+Kitchen Cabinets 
+Sections: 
+● Design Options 
+● Material Library 
+● Finish Options 
+● Gallery 
+● Consultation Form 
+Doors 
+Sections: 
+● Internal Doors 
+● External Doors 
+● Bespoke Doors 
+● Material Options 
+● Project Gallery 
+TV Consoles 
+Sections: 
+● Floating Consoles 
+● Integrated Systems 
+● Smart Entertainment Units 
+● Gallery 
+● Consultation CTA 
+Factory & Craftsmanship 
+Sections: 
+● Our Story 
+● Manufacturing Process 
+● Materials & Sourcing 
+● Quality Control 
+● Meet The Craftsmen 
+● Sustainability 
+Projects 
+Portfolio Categories: 
+● Residential 
+● Commercial 
+● Hospitality 
+● Furniture Projects 
+Each Project Page Must Include: 
+● Project Overview 
+● Client Challenge 
+● Design Solution 
+● Products Used 
+● Gallery 
+● Outcome 
+● Client Testimonial 
+Contact 
+Features: 
+● Contact Form 
+● WhatsApp Integration 
+● Consultation Request 
+● Map Location 
+● Email & Phone 
+VISUAL DESIGN GUIDELINES 
+Typography 
+Headings: 
+Playfair Display 
+Body Text: 
+Inter 
+Colour Palette 
+Primary: 
+● Warm Cream 
+● Soft Taupe 
+● Charcoal Black 
+Accent: 
+● Deep Olive 
+● Muted Gold 
+Animation Style 
+● Scroll Reveals 
+● Fade Transitions 
+● Image Parallax 
+● Hover Effects 
+Animations should feel subtle and premium. 
+TECHNICAL REQUIREMENTS 
+Recommended Stack 
+CORE FUNCTIONALITY 
+E-Commerce 
+● Product Catalogue 
+● Cart 
+● Checkout 
+● Payment Integration 
+● Order Confirmation 
+Lead Generation 
+● Contact Forms 
+● Consultation Forms 
+● Quote Requests 
+● WhatsApp Integration 
+Customer Experience 
+● Wishlist 
+● Product Filtering 
+● Product Search 
+● Related Products 
+ADMIN DASHBOARD REQUIREMENTS 
+Product Management 
+● Create Products 
+● Edit Products 
+● Delete Products 
+● Category Management 
+● Image Uploads 
+Customer Management 
+● Customer Database 
+● Customer History 
+● Customer Export 
+Inquiry Management 
+● Consultation Requests 
+● Quote Requests 
+● Contact Requests 
+Order Management 
+Order Status: 
+● Pending 
+● Confirmed 
+● In Production 
+● Ready For Delivery 
+● Delivered 
+SEO REQUIREMENTS 
+Every major service page must have: 
+● Unique Meta Title 
+● Meta Description 
+● Open Graph Data 
+● Schema Markup 
+Additional SEO Assets: 
+● XML Sitemap 
+● Robots.txt 
+● Product Schema 
+● FAQ Schema 
+● Project Schema 
+Target Local SEO Keywords: 
+● Interior Design Abuja 
+● Luxury Furniture Abuja 
+● Furniture Manufacturer Nigeria 
+● Kitchen Cabinets Abuja 
+● Custom Furniture Nigeria 
+ANALYTICS & TRACKING 
+Install: 
+● Google Analytics 
+● Google Search Console 
+● Meta Pixel 
+Track: 
+● Purchases 
+● Consultation Requests 
+● Quote Requests 
+● WhatsApp Clicks 
+● Contact Form Submissions 
+14-DAY DEVELOPMENT ROADMAP 
+WEEK 1 
+Day 1 
+Project Review 
+Site Structure Approval 
+Day 2 
+Homepage Completion 
+Day 3 
+Shop Categories Completion 
+Day 4 
+Product Pages Completion 
+Day 5 
+Services, Projects, Factory & Contact Pages 
+Milestone: 
+Frontend Experience Approved 
+WEEK 2 
+Day 6 
+Product Management System 
+Day 7 
+Order & Customer Management 
+Day 8 
+Checkout & Payment Integration 
+Day 9 
+Consultation & Inquiry Systems 
+Day 10 
+Content Upload 
+Day 11 
+SEO Setup 
+Day 12 
+QA Testing 
+Day 13 
+Optimization & Bug Fixes 
+Day 14 
+Launch Approval & Go Live 
+Milestone: 
+Website Launch Ready 
+QA CHECKLIST 
+Frontend 
+● Responsive Design 
+● Mobile Optimization 
+● Navigation Functionality 
+● Search Functionality 
+● Product Filtering 
+● Form Validation 
+E-Commerce 
+● Add To Cart 
+● Checkout 
+● Payment Processing 
+● Order Confirmation 
+● Delivery Logic 
+Backend 
+● Product Management 
+● Customer Management 
+● Inquiry Management 
+● Order Tracking 
+SEO 
+● Metadata Complete 
+● Sitemap Generated 
+● Analytics Installed 
+Security 
+● SSL Active 
+● Backup System Active 
+● Admin Access Protected 
+FINAL ACCEPTANCE CRITERIA 
+The website will be considered complete only when: 
+● All approved pages are functional 
+● Mobile responsiveness is verified 
+● Checkout process works successfully 
+● Consultation workflow functions correctly 
+● Forms and integrations are operational 
+● SEO setup is completed 
+● Analytics tracking is installed 
+● Website speed meets performance targets 
+● Security and backup systems are active 
+SUCCESS METRICS 
+The project will be considered successful when it achieves: 
+● Premium global brand perception 
+● Smooth customer experience 
+● Increased consultation inquiries 
+● Increased online sales 
+● Improved search visibility 
+● Scalable infrastructure for future growth 
+● Strong positioning as a leading furniture and interior design company in Nigeria and 
+beyond 
+PROJECT GOVERNANCE 
+STRUCTURE 
+PROJECT GOVERNANCE STRUCTURE 
+1. Project Lead 
+Owner: Merrimann 
+Primary responsibility: 
+Ensure the website achieves business goals, brand positioning, and launch readiness. 
+Responsible for: 
+● Project supervision 
+● Stakeholder communication 
+● Approvals 
+● Scope management 
+● Timeline monitoring 
+● Developer coordination 
+● Content review 
+● Quality assurance review 
+● Final sign-off 
+Decision Authority: 
+✅
+Final approval on design 
+✅
+Final approval on content 
+✅
+Final approval on launch 
+2. Business Owner 
+Owner: IMTERNO Management 
+Primary responsibility: 
+Provide business information and approvals. 
+Responsible for: 
+● Company information 
+● Brand direction 
+● Product information 
+● Pricing 
+● Service information 
+● Team profiles 
+● Project photos 
+● Testimonials 
+● Final business approval 
+Decision Authority: 
+✅
+Product pricing 
+✅
+Business policies 
+✅
+Company information 
+✅
+Service offerings 
+3. Web Developer 
+Owner: Developer 
+Primary responsibility: 
+Build the website according to approved specifications. 
+Responsible for: 
+Frontend 
+● Homepage 
+● Navigation 
+● Product Pages 
+● Category Pages 
+● Service Pages 
+● Projects Pages 
+● Mobile Optimization 
+Backend 
+● CMS Setup 
+● Product Management 
+● Checkout 
+● Payment Integration 
+● Customer Database 
+● Inquiry Forms 
+Technical 
+● Website Security 
+● Speed Optimization 
+● Hosting Configuration 
+● SSL Configuration 
+● Backup Setup 
+Testing 
+● Bug Fixes 
+● Browser Testing 
+● Mobile Testing 
+Decision Authority: 
+✅
+Technical implementation 
+❌
+Brand decisions 
+❌
+Content decisions 
+❌
+Business decisions 
+4. Content Team 
+Owner: Merrimann + IMTERNO 
+Primary responsibility: 
+Create all customer-facing content. 
+Responsible for: 
+Website Copy 
+● Homepage Copy 
+● About Page 
+● Service Pages 
+● Product Descriptions 
+● Project Case Studies 
+SEO Content 
+● Meta Titles 
+● Meta Descriptions 
+● FAQs 
+Media Assets 
+● Product Images 
+● Team Photos 
+● Factory Photos 
+● Project Photography 
+Decision Authority: 
+✅
+Content creation 
+❌
+Technical implementation 
+5. Design Lead 
+Owner: Designer (if applicable) 
+If the developer is also designing, combine this role. 
+Responsible for: 
+● UI Design 
+● Typography 
+● Color System 
+● Visual Consistency 
+● Mobile Experience 
+● User Experience 
+Decision Authority: 
+✅
+ Design implementation 
+❌
+ Business decisions 
+ 
+DELIVERABLE OWNERSHIP MATRIX 
+Deliverable Project 
+Lead 
+Business 
+Owner 
+Develop
+er 
+Content 
+Team 
+Design
+er 
+Sitemap A C C C C 
+Homepage Design A C C C R 
+Homepage 
+Development 
+C I R I C 
+Product Pages C C R C C 
+Product Descriptions I C I R I 
+Services Pages C C I R I 
+Factory Page C C I R I 
+Projects Portfolio C C I R I 
+Consultation Forms C I R I I 
+E-commerce Setup I C R I I 
+Payment Gateway I C R I I 
+SEO Setup C I R R I 
+Analytics Setup C I R I I 
+QA Testing A I R C C 
+Launch Approval A A C C C 
+Legend: 
+● R = Responsible (does the work) 
+● A = Accountable (final approval) 
+● C = Consulted 
+● I = Informed 
+WEEKLY DELIVERABLE 
+RESPONSIBILITY 
+Week 1 
+Merrimann 
+● Approve sitemap 
+● Review designs 
+● Coordinate content 
+● Review progress daily 
+IMTERNO 
+● Provide assets 
+● Provide project photos 
+● Provide product information 
+● Approve pages 
+Developer 
+● Complete frontend 
+● Build pages 
+● Implement UI 
+Content Team 
+● Deliver homepage copy 
+● Deliver service pages 
+● Deliver product content 
+Week 2 
+Merrimann 
+● QA review 
+● Bug review 
+● Launch approval 
+IMTERNO 
+● Final business review 
+● Pricing verification 
+Developer 
+● Backend completion 
+● Payment integration 
+● SEO implementation 
+● Bug fixes 
+● Launch deployment 
+Content Team 
+● Upload remaining content 
+● Final proofreading 
+DAILY STANDUP FORMAT (15 MINUTES) 
+Every day, ask the developer: 
+1. What was completed yesterday? 
+2. What are you working on today? 
+3. What is blocking progress? 
+4. What do you need from us? 
+Then ask: 
+Are we still on track for Day 14 launch? 
+If the answer is "No," immediately identify the blocker and assign an owner. 
+FINAL APPROVAL AUTHORITY 
+Before launch, nobody should be able to say: 
+"I thought someone else was handling it." 
+The final approval chain should be: 
+1. Developer confirms functionality. 
+2. Content team confirms content. 
+3. IMTERNO confirms business information. 
+4. Merrimann confirms overall quality and signs off. 
+Only after all 

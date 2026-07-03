@@ -25,7 +25,7 @@ export default function DashboardPage() {
   }
 
   const statCards = [
-    { title: 'Total Revenue', value: formatCurrency(stats.totalRevenue), icon: TrendingUp, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+    { title: 'Total Revenue', value: formatCurrency(stats.totalRevenue ?? 0), icon: TrendingUp, color: 'text-emerald-600', bg: 'bg-emerald-50' },
     { title: 'Total Orders', value: stats.totalOrders, icon: ShoppingCart, color: 'text-blue-600', bg: 'bg-blue-50' },
     { title: 'Total Products', value: stats.totalProducts, icon: Package, color: 'text-intarno-accent', bg: 'bg-intarno-accent/10' },
     { title: 'Total Customers', value: stats.totalCustomers, icon: Users, color: 'text-purple-600', bg: 'bg-purple-50' },

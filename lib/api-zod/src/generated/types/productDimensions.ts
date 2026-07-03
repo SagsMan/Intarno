@@ -6,6 +6,11 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface HealthStatus {
-  status: string;
-}
+/**
+ * @nullable
+ */
+export type ProductDimensions = {
+  width?: number;
+  height?: number;
+  depth?: number;
+} | null;
