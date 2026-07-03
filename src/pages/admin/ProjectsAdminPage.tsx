@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { Plus, Search, Edit2, Trash2, RefreshCw, X, Star } from 'lucide-react'
+import { Plus, Search, Edit2, Trash2, RefreshCw, X, Star, AlertCircle } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 
 interface Project {
@@ -45,6 +45,7 @@ function CategoryBadge({ category }: { category: string }) {
 export default function ProjectsAdminPage() {
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [search, setSearch] = useState('')
   const [filterCat, setFilterCat] = useState('all')
   const [modalOpen, setModalOpen] = useState(false)
@@ -56,9 +57,17 @@ export default function ProjectsAdminPage() {
 
   const load = useCallback(async () => {
     setLoading(true)
-    const { data } = await supabase.from('projects').select('*').order('created_at', { ascending: false })
-    setProjects(data ?? [])
-    setLoading(false)
+    setError(null)
+    try {
+      const { data, error: dbError } = await supabase.from('projects').select('*').order('created_at', { ascending: false })
+      if (dbError) throw dbError
+      setProjects(data ?? [])
+    } catch (err) {
+      console.error('[Projects] load error:', err)
+      setError(err instanceof Error ? err.message : 'Failed to load projects. Check your Supabase configuration.')
+    } finally {
+      setLoading(false)
+    }
   }, [])
 
   useEffect(() => { load() }, [load])
@@ -82,13 +91,20 @@ export default function ProjectsAdminPage() {
   const save = async () => {
     if (!form.title.trim()) return
     setSaving(true)
-    const payload = { ...form, slug: form.slug || slugify(form.title) }
-    if (editing) {
-      await supabase.from('projects').update({ ...payload, updated_at: new Date().toISOString() }).eq('id', editing.id)
-    } else {
-      await supabase.from('projects').insert(payload)
+    try {
+      const payload = { ...form, slug: form.slug || slugify(form.title) }
+      if (editing) {
+        await supabase.from('projects').update({ ...payload, updated_at: new Date().toISOString() }).eq('id', editing.id)
+      } else {
+        await supabase.from('projects').insert(payload)
+      }
+      setModalOpen(false)
+      load()
+    } catch (err) {
+      console.error('[Projects] save error:', err)
+    } finally {
+      setSaving(false)
     }
-    setSaving(false); setModalOpen(false); load()
   }
 
   const remove = async (id: number) => {
@@ -126,6 +142,17 @@ export default function ProjectsAdminPage() {
         </div>
       </div>
 
+      {error && (
+        <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-sm text-sm text-red-700">
+          <AlertCircle size={16} className="mt-0.5 shrink-0" />
+          <div>
+            <p className="font-medium">Failed to load projects</p>
+            <p className="text-red-600 mt-0.5">{error}</p>
+            <button onClick={load} className="mt-2 underline text-red-700 hover:no-underline">Try again</button>
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-intarno-mid" />
@@ -143,6 +170,10 @@ export default function ProjectsAdminPage() {
         {loading ? (
           <div className="flex items-center justify-center py-16">
             <div className="w-7 h-7 border-2 border-intarno-accent border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : error ? (
+          <div className="text-center py-16 text-intarno-mid text-sm">
+            Unable to load projects. Please check your connection and try again.
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-16 text-intarno-mid text-sm">

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Suspense, lazy } from 'react'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
+import { WishlistProvider } from './contexts/WishlistContext'
 
 // ─── Public layout & pages ──────────────────────────────────────────────────
 import MainLayout from './layouts/MainLayout'
@@ -127,7 +128,9 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <AppRoutes />
+        <WishlistProvider>
+          <AppRoutes />
+        </WishlistProvider>
       </AuthProvider>
     </QueryClientProvider>
   )

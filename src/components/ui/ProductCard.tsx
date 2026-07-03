@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Heart } from 'lucide-react'
 import type { Product } from '../../types/product'
 import { formatPrice } from '../../utils/format'
+import { useWishlist } from '../../contexts/WishlistContext'
 
 interface ProductCardProps {
   product: Product
@@ -10,8 +11,9 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, priority = false }: ProductCardProps) {
-  const [wishlist, setWishlist] = useState(false)
   const [imgLoaded, setImgLoaded] = useState(false)
+  const { toggle, isWishlisted } = useWishlist()
+  const wishlisted = isWishlisted(product.id)
 
   return (
     <div className="group relative">
@@ -53,13 +55,13 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
 
         {/* Wishlist */}
         <button
-          onClick={(e) => { e.preventDefault(); setWishlist(!wishlist) }}
+          onClick={(e) => { e.preventDefault(); toggle(product) }}
           className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-white"
-          aria-label="Add to wishlist"
+          aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
         >
           <Heart
             size={15}
-            className={wishlist ? 'fill-red-500 text-red-500' : 'text-intarno-charcoal'}
+            className={wishlisted ? 'fill-red-500 text-red-500' : 'text-intarno-charcoal'}
           />
         </button>
 

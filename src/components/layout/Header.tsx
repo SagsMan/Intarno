@@ -5,6 +5,7 @@ import { navItems } from '../../data/navigation'
 import MegaMenu from './MegaMenu'
 import MobileMenu from './MobileMenu'
 import SearchOverlay from '../ui/SearchOverlay'
+import { useWishlist } from '../../contexts/WishlistContext'
 
 export default function Header() {
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
@@ -14,6 +15,7 @@ export default function Header() {
   const menuTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const location = useLocation()
   const isHome = location.pathname === '/'
+  const { count: wishlistCount } = useWishlist()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60)
@@ -153,10 +155,17 @@ export default function Header() {
                 <Search size={20} />
               </button>
               <button
-                className={`p-2 transition-colors hidden md:block ${isTransparent ? 'text-white hover:text-white/70' : 'hover:text-intarno-accent'}`}
+                className={`p-2 transition-colors hidden md:block relative ${isTransparent ? 'text-white hover:text-white/70' : 'hover:text-intarno-accent'}`}
                 aria-label="Wishlist"
               >
                 <Heart size={20} />
+                {wishlistCount > 0 && (
+                  <span className={`absolute top-0.5 right-0.5 w-4 h-4 rounded-full text-[10px] flex items-center justify-center font-medium transition-colors ${
+                    isTransparent ? 'bg-white text-intarno-black' : 'bg-red-500 text-white'
+                  }`}>
+                    {wishlistCount > 9 ? '9+' : wishlistCount}
+                  </span>
+                )}
               </button>
               <Link
                 to="/cart"
