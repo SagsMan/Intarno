@@ -235,16 +235,17 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
-    max-width: 100%;
+    /* overflow-x: clip instead of hidden — clip doesn't create a scroll
+       container, so position: sticky on the Header continues to work.
+       overflow-x: hidden on html/body is a known sticky breaker. */
+    overflow-x: clip;
   }
 
   body {
     font-family: "DM Sans", system-ui, sans-serif;
     background-color: #fafaf8;
     color: #0a0a0a;
-    overflow-x: hidden;
-    max-width: 100%;
+    overflow-x: clip;
   }
 
   img {
