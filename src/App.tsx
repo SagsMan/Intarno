@@ -4,6 +4,7 @@ import { Suspense, lazy } from 'react'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import { WishlistProvider } from './contexts/WishlistContext'
 import { ThemeProvider } from './contexts/ThemeContext'
+import { usePageView } from './hooks/use-page-view'
 import { CartProvider } from './contexts/CartContext'
 
 // ─── Public layout & pages (non-lazy for instant navigation) ────────────────
@@ -69,6 +70,7 @@ function PublicPageLoader() {
 }
 
 function AppRoutes() {
+  usePageView()
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL?.replace(/\/$/, '') || ''}>
       <Routes>
