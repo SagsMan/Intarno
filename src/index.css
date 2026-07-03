@@ -411,7 +411,7 @@
 }
 .admin-dark input::placeholder,
 .admin-dark textarea::placeholder {
-  color: #6060808 !important;
+  color: #606080 !important;
 }
 
 /* Table row hover in dark mode */
