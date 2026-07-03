@@ -4,6 +4,7 @@ import { Suspense, lazy } from 'react'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import { WishlistProvider } from './contexts/WishlistContext'
 import { ThemeProvider } from './contexts/ThemeContext'
+import { CartProvider } from './contexts/CartContext'
 
 // ─── Public layout & pages (non-lazy for instant navigation) ────────────────
 import MainLayout from './layouts/MainLayout'
@@ -15,10 +16,10 @@ import RoomsPage from './pages/RoomsPage'
 import InspirationPage from './pages/InspirationPage'
 import ContactPage from './pages/ContactPage'
 import AboutPage from './pages/AboutPage'
+import CartPage from './pages/CartPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 // ─── Admin layout — imported directly (NOT lazy) so sidebar never disappears ─
-//     during page-to-page navigation inside the admin.
 import AdminLayout from './layouts/AdminLayout'
 
 // ─── Secondary public pages (lazy — rarely visited) ─────────────────────────
@@ -30,8 +31,9 @@ const TvConsolesPage        = lazy(() => import('./pages/TvConsolesPage'))
 const FactoryPage           = lazy(() => import('./pages/FactoryPage'))
 const ProjectsPortfolioPage = lazy(() => import('./pages/ProjectsPortfolioPage'))
 const ProjectDetailPage     = lazy(() => import('./pages/ProjectDetailPage'))
+const CheckoutPage          = lazy(() => import('./pages/CheckoutPage'))
 
-// ─── Admin pages (lazy — Suspense lives inside AdminLayout now) ──────────────
+// ─── Admin pages (lazy) ──────────────────────────────────────────────────────
 const AdminLoginPage      = lazy(() => import('./pages/admin/LoginPage'))
 const AdminDashboardPage  = lazy(() => import('./pages/admin/DashboardPage'))
 const AdminProductsPage   = lazy(() => import('./pages/admin/ProductsPage'))
@@ -70,7 +72,7 @@ function AppRoutes() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL?.replace(/\/$/, '') || ''}>
       <Routes>
-        {/* ── Public site ── wrapped in its own Suspense */}
+        {/* ── Public site ── */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
           <Route path="shop" element={<ShopPage />} />
@@ -83,6 +85,7 @@ function AppRoutes() {
           <Route path="inspiration" element={<InspirationPage />} />
           <Route path="contact" element={<ContactPage />} />
           <Route path="about" element={<AboutPage />} />
+          <Route path="cart" element={<CartPage />} />
           <Route path="design-services"   element={<Suspense fallback={<PublicPageLoader />}><DesignServicesPage /></Suspense>} />
           <Route path="custom-furniture"  element={<Suspense fallback={<PublicPageLoader />}><CustomFurniturePage /></Suspense>} />
           <Route path="kitchen-cabinets"  element={<Suspense fallback={<PublicPageLoader />}><KitchenCabinetsPage /></Suspense>} />
@@ -91,6 +94,7 @@ function AppRoutes() {
           <Route path="factory"           element={<Suspense fallback={<PublicPageLoader />}><FactoryPage /></Suspense>} />
           <Route path="projects"          element={<Suspense fallback={<PublicPageLoader />}><ProjectsPortfolioPage /></Suspense>} />
           <Route path="projects/:slug"    element={<Suspense fallback={<PublicPageLoader />}><ProjectDetailPage /></Suspense>} />
+          <Route path="checkout"          element={<Suspense fallback={<PublicPageLoader />}><CheckoutPage /></Suspense>} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
@@ -104,9 +108,7 @@ function AppRoutes() {
           }
         />
 
-        {/* ── Protected admin area ──
-              AdminLayout is NOT lazy, so the sidebar never flashes away.
-              Suspense for page content lives inside AdminLayout's <Outlet />.     ── */}
+        {/* ── Protected admin area ── */}
         <Route
           path="/admin"
           element={
@@ -134,9 +136,11 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <AuthProvider>
-          <WishlistProvider>
-            <AppRoutes />
-          </WishlistProvider>
+          <CartProvider>
+            <WishlistProvider>
+              <AppRoutes />
+            </WishlistProvider>
+          </CartProvider>
         </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
